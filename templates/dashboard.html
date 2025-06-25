@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Dashboard page</h1>
-  <div class="container">
-    <p>{{a}}</p>
-    <p>{{b}}</p>
-  </div>
-</body>
-</html>
+{% extends "base.html" %} {% block title%} dashboard {% endblock %} {% block
+content%}
+<style>
+  .image-container {
+    position: relative; /* Essential for containing absolute children */
+    width: 400px; /* Example width */
+    height: 300px; /* Example height */
+    border: 1px solid #ccc; /* For visualization */
+}
+
+.overlap-image {
+    position: absolute; /* Take images out of normal flow */
+}
+
+.image1 {
+    top: 0;
+    left: 0;
+    z-index: 1; /* Controls stacking order (higher is on top) */
+}
+
+.image2 {
+    top: 50px;
+    left: 100px;
+    z-index: 2; /* Image 2 will be on top of Image 1 */
+}
+</style>
+<h1 class="text-center mt-5">Dashboard</h1>
+<div class="image-container">
+    <img src="static/car1.jpg" alt="Image 1" class="overlap-image image1" style="height: 100px;">
+    <img src="static/car2.jpg" alt="Image 2" class="overlap-image image2" style="height: 100px;">
+</div>
+{% endblock %}

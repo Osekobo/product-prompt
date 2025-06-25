@@ -1,15 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Sales page</h1>
-  <div class="container">
-    <p>{{g}}</p>
-    <p>{{h}}</p>
+{% extends "base.html" %} {% block title%} sales {% endblock %} {% block
+content%}
+
+<h1 class="text-center mt-5">Sales page</h1>
+
+<div class="container">
+  <!-- Button trigger modal -->
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Make sale
+  </button>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- s -->
+          <form action="/add_sales" method="post">
+            <label for="">select product</label><br />
+            <select name="id">
+              <option value="">select products</option>
+              {% for product in products %}
+              <option value="{{product[0]}}">{{product[1]}}</option>
+              {% endfor%}</select
+            ><br /><br />
+            <label for="">Quantity Sold</label><br />
+            <input type="number" name="quantity" /><br /><br />
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Add sale
+              </button>
+            </div>
+          </form>
+          <!-- e -->
+        </div>
+      </div>
+    </div>
   </div>
-</body>
-</html>
+</div>
+
+<div class="container">
+  <table id="example" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Sales ID</th>
+        <th>Product ID</th>
+        <th>Quantity</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in sales%}
+      <tr>
+        <td>{{s[0]}}</td>
+        <td>{{s[1]}}</td>
+        <td>{{s[2]}}</td>
+        <td>{{s[3]}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

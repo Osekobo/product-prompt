@@ -2,33 +2,29 @@ import psycopg2
 from datetime import datetime
 
 conn = psycopg2.connect(user="postgres", password="12039",
-                        host="localhost", port="5432", database="my_duka")
+                        host="localhost", port="5432", database="myduka")
 
 cur = conn.cursor()
 
-# products
-
-
+# getting products
 def get_products():
     cur.execute("select * from products")
     products = cur.fetchall()
     return products
-x = get_products()
-print(x)
-# sales
 
 
+# getting  sales
 def get_sales():
     cur.execute("select * from sales")
     sales = cur.fetchall()
     return sales
 
+# getting stock
+def get_stock():
+    cur.execute("select * from stock")
+    stock = cur.fetchall()
+    return stock
 
-product_data = get_products()
-sales_data = get_sales()
-
-# print("Product data", product_data)
-# print("Sales data", sales_data)
 
 # method 1 inserting products
 def insert_products(values):
@@ -36,27 +32,52 @@ def insert_products(values):
     cur.execute(insert_query, values)
     conn.commit()
 
-# method 2 inserting products
-def insert_products(values):
-    cur.execute(f"insert into products(name,buying_price,selling_price)values{values}")
+
+
+# current_datetime = str(datetime.now())
+
+# inserting stock
+def insert_stock(values):
+    insert_stock = "insert into stock(pid,stock_quantity,created_at)values(%s,%s,now())"
+    cur.execute(insert_stock, values)
     conn.commit()
 
-product_value1 = ('cup',40,80)
-product_value2 = ('spoon',50,100)
 
-insert_products(product_value1)
-insert_products(product_value2)
-products = get_products()
-# print(products)
-
-# inserting sales
-current_datetime = str(datetime.now())
-print(current_datetime)
+# inserting sale
 def insert_sales(values):
-    cur.execute(f"insert into sales(pid,quantity,created_at)values{values}")
+    insert_sales = "insert into sales(pid,quantity,created_at)values(%s,%s,now())"
+    cur.execute(insert_sales, values)
     conn.commit()
 
-sale_values = (2,8,current_datetime)    
-insert_sales(sale_values)
-sales = get_sales()
-# print(sales)
+
+# getting sales per products
+def sales_per_products():
+    cur.execute("select p.name AS product_name, SUM(s.quantity) AS total_quantity_sold FROM sales s JOIN products p ON s.pid = p.id GROUP BY p.name ORDER BY total_quantity_sold DESC")
+    s_p_p = cur.fetchall()
+    return s_p_p
+
+# sales per day
+def sales_per_day():
+    cur.execute("SELECT DATE(created_at) AS sale_date, SUM(quantity) AS total_quantity_sold FROM sales GROUP BY sale_date ORDER BY sale_date")
+    s_p_d = cur.fetchall() 
+    return s_p_d
+
+# profit per product
+def profit_per_prouct():
+    cur.execute("SELECT p.name AS product_name, SUM((p.selling_price - p.buying_price) * s.quantity) AS total_profit FROM sales s JOIN products p ON s.pid = p.id GROUP BY p.name ORDER BY total_profit DESC")
+    p_p_p = cur.fetchall() 
+    return p_p_p
+
+# profit per day
+def profit_per_day():
+    cur.execute("SELECT DATE(s.created_at) AS sale_date, SUM((p.selling_price - p.buying_price) * s.quantity) AS daily_profit FROM sales s JOIN products p ON s.pid = p.id GROUP BY sale_date ORDER BY sale_date")
+    p_p_d = cur.fetchall() 
+    return p_p_d
+
+def available_stock(pid):
+    cur.execute("select sum(stock.stock_quantity)from stock where pid = %s,(pid,)")
+    total_stock = cur.fetchone()[0] or 0
+    cur.execute("select sum(sales.quantity)from sales where pid = %s",(pid,))
+    total_sold = cur.fetchone()[0] or 0
+
+    return total_stock - total_sold

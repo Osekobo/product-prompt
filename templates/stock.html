@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block title%} stock {% endblock %} {% block
+content%}
+
+<h1 class="text-center mt-5">Stock page</h1>
+
+<!-- start -->
+<div class="container">
+  <!-- Button trigger modal -->
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Add Stock
+  </button>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- form start -->
+          <form action="/add_stock" method="post">
+            <label for="">select product</label><br />
+            <select name="pid">
+              <option value="">select products</option>
+              {% for product in products%}
+              <option value="{{product[0]}}">{{product[1]}}</option>
+              {% endfor%}</select
+            ><br /><br />
+            <label for="">Stock Quantity</label><br />
+            <input type="number" name="stock_quantity" /><br /><br />
+            <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Add Stock</button>
+        </div>
+          </form>
+          <!-- form end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->
+
+<div class="container">
+  <table id="example" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Stock ID</th>
+        <th>Product ID</th>
+        <th>Stock Quantity</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in stock%}
+      <tr>
+        <td>{{i[0]}}</td>
+        <td>{{i[1]}}</td>
+        <td>{{i[2]}}</td>
+        <td>{{i[3]}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

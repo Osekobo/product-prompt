@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+      integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+      crossorigin="anonymous"
+    ></script>
+    <!-- table links -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css"
+      rel="stylesheet"
+    />
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta http-equiv="refresh" content="" />
+    <title>{% block title%} {% endblock%}</title>
+  </head>
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid bg-black">
+          <a class="navbar-brand text-warning fw-bold fs-2" href="/">MyDuka</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-center"
+            id="navbarNav"
+          >
+            <ul class="navbar-nav gap-3">
+              <li class="nav-item">
+                <a
+                  class="nav-link active text-white p-3"
+                  aria-current="page"
+                  href="/"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/products">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/stock">Stock</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/sales">Sales</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/dashboard"
+                  >DashBoard</a
+                >
+              </li>
+              <li class="nav-item">
+                <form class="d-flex" role="search" style="padding: 16px 32px">
+                  <input
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button class="btn btn-outline-success" type="submit">
+                    Search
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      <div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <div >
+              {% for category, message in messages %}
+              <div class="alert alert-{{category}} alert-dismissible" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+        
+              {% endfor %}
+            </div>
+            {% endif %} {% endwith %}
+      </div>      
+      {% block content%} {% endblock%}
+
+      <div class="bg-black text-light py-5">
+        <div class="container justify-content-between" style="display: flex">
+          <ul class="list-unstyled">
+            <li class="fs-5 fw-semibold">Popular Features</li>
+            <br />
+            <li>All Products and Features</li>
+            <li>Free Meeting Scheduler App</li>
+            <li>Free Website Builder</li>
+            <li>Free Chatbot Builder</li>
+            <li>Free Landing Page Builder</li>
+            <li>Free Web Hosting</li>
+          </ul>
+          <ul class="list-unstyled">
+            <li class="fs-5 fw-semibold">Free Tools</li>
+            <br />
+            <li>See All Free Business Tools</li>
+            <li>Clip Creator</li>
+            <li>Make My Persona</li>
+            <li>Email Signature Generator</li>
+            <li>Guide Creator</li>
+          </ul>
+          <div style="width: 2px; height: 440px; background-color: white"></div>
+
+          <ul class="list-unstyled">
+            <li class="fs-5 fw-semibold">Company</li>
+            <br />
+            <li>About Us</li>
+            <li>careers</li>
+            <li>Management team</li>
+            <li>Blog</li>
+            <li>Contact Us</li>
+            <li>Board of Directors</li>
+          </ul>
+          <ul class="list-unstyled">
+            <li class="fs-5 fw-semibold">Customers</li>
+            <br />
+            <li>Customer Support</li>
+            <li>Join a Local User Group</li>
+            <br /><br /><br /><br />
+            <li class="fs-5 fw-semibold">Partners</li>
+            <br />
+            <li>All Partner Programs</li>
+            <li>Solutions Partner Program</li>
+            <li>App Partner Program</li>
+            <li>HubSpot for Startups</li>
+          </ul>
+        </div>
+        <div class="container">
+          <!--icons-->
+          <div>
+            <hr style="height: 4px; background-color: yellow; border: none" />
+          </div>
+          <div class="mt-5">
+            <ul
+              class="list-unstyled justify-content-between"
+              style="display: flex; max-width: 300px; margin: auto"
+            >
+              <li><i class="fa-brands fa-facebook-f"></i></li>
+              <li><i class="fa-brands fa-instagram"></i></li>
+              <li><i class="fa-brands fa-youtube"></i></li>
+              <li><i class="fa-brands fa-x-twitter"></i></li>
+              <li><i class="fa-brands fa-linkedin-in"></i></li>
+              <li><i class="fa-brands fa-tiktok"></i></li>
+            </ul>
+          </div>
+          <div>
+            <h1 class="text-center fw-bold mt-4 text-warning">LOGO</h1>
+            <h6 class="text-center mt-4">Copyright &copy 2025</h6>
+            <div class="mt-5">
+              <ul
+                class="list-unstyled justify-content-between"
+                style="display: flex"
+              >
+                <li>
+                  <a class="link-underline-light text-light">Legal Stuff</a>
+                </li>
+                <div
+                  style="width: 2px; height: 25px; background-color: white"
+                ></div>
+                <li>
+                  <a class="link-underline-light text-light">Privacy Policy</a>
+                </li>
+                <div
+                  style="width: 2px; height: 25px; background-color: white"
+                ></div>
+                <li><a class="link-underline-light text-light">Security</a></li>
+                <div
+                  style="width: 2px; height: 25px; background-color: white"
+                ></div>
+                <li>
+                  <a class="link-underline-light text-light"
+                    >Website Accessibility</a
+                  >
+                </li>
+                <div
+                  style="width: 2px; height: 25px; background-color: white"
+                ></div>
+                <li>
+                  <a class="link-underline-light text-light">Manage Cookies</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+      integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+    <script>
+      new DataTable("#example");
+    </script>
+  </body>
+</html>

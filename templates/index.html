@@ -1,12 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Index page</h1>
-  <p>{{c}}</p>
-</body>
-</html>
+{% extends "base.html" %} {% block title%} index {% endblock %} {% block
+content%}
+<div class="card mb-3 bg-black">
+  <div class="row g-0">
+    <div class="col-md-8">
+      <div class="card-body">
+        <ul class="list-unstyled mt-5 text-warning">
+          <li><i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i></li>
+          <li><i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i></li>
+          <li><i class="fa-solid fa-xmark"></i></li>
+        </ul>
+        <h5 class="card-title text-warning fs-1 fw-bolder">The Future`s Bright,<br>Business is Here</h5>
+        <p class="card-text text-white">Enterpreneurship has great prominence in the modern<br>economic market. A lot of countries are encouraging<br> their citizens to come up with innovative business ideas</p>
+        <button type="button" class="btn btn-warning">Register Now</button>
+        <ul class="list-unstyled mt-5 text-warning">
+          <li><i class="fa-solid fa-xmark"></i></li>
+          <li><i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i></li>
+          <li><i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <ul class="list-unstyled text-warning float-end">
+        <li><i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i>&nbsp;<i class="fa-solid fa-xmark"></i></li>
+      </ul>
+      <img src="static/car1.jpg" class="img-fluid rounded-start" alt="...">
+    </div>
+  </div>
+</div>
+{% endblock %}
