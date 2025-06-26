@@ -38,12 +38,20 @@
     />
     <meta http-equiv="refresh" content="" />
     <title>{% block title%} {% endblock%}</title>
+    <style>
+    .nav-link:hover  {
+      background-color: yellow;
+      border-radius: 60px;
+      color: black;
+    }
+  </style>
   </head>
+
   <body>
     <div>
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid bg-black">
-          <a class="navbar-brand text-warning fw-bold fs-2" href="/">MyDuka</a>
+          <a class="navbar-brand text-warning fw-bold fs-5" href="/">MyDuka</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -99,21 +107,25 @@
           </div>
         </div>
       </nav>
-      
+
       <div>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              <div >
-              {% for category, message in messages %}
-              <div class="alert alert-{{category}} alert-dismissible" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-        
-              {% endfor %}
-            </div>
-            {% endif %} {% endwith %}
-      </div>      
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div>
+          {% for category, message in messages %}
+          <div class="alert alert-{{category}} alert-dismissible" role="alert">
+            {{ message }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+            ></button>
+          </div>
+
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+      </div>
       {% block content%} {% endblock%}
 
       <div class="bg-black text-light py-5">

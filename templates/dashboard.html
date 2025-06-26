@@ -6,27 +6,40 @@ content%}
     width: 400px; /* Example width */
     height: 300px; /* Example height */
     border: 1px solid #ccc; /* For visualization */
-}
+  }
 
-.overlap-image {
+  .overlap-image {
     position: absolute; /* Take images out of normal flow */
-}
+  }
 
-.image1 {
+  .image1 {
     top: 0;
     left: 0;
     z-index: 1; /* Controls stacking order (higher is on top) */
-}
+  }
 
-.image2 {
+  .image2 {
     top: 50px;
     left: 100px;
     z-index: 2; /* Image 2 will be on top of Image 1 */
-}
+  }
 </style>
 <h1 class="text-center mt-5">Dashboard</h1>
-<div class="image-container">
-    <img src="static/car1.jpg" alt="Image 1" class="overlap-image image1" style="height: 100px;">
-    <img src="static/car2.jpg" alt="Image 2" class="overlap-image image2" style="height: 100px;">
+<div
+  class="image-container position-relative"
+  style="width: 400px; height: 300px; border: 1px solid #ccc"
+>
+  <img
+    src="static/car1.jpg"
+    alt="Image 1"
+    class="overlap-image image1 position-absolute"
+    style="height: 100px; top: 0; left: 0; z-index: 1;"
+  />
+  <img
+    src="static/car2.jpg"
+    alt="Image 2"
+    class="overlap-image image2"
+    style="height: 100px; top: 50; left: 100px; z-index: 2;"
+  />
 </div>
 {% endblock %}

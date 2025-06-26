@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,flash
-from database import get_products, get_sales, insert_products,insert_stock, get_stock, insert_sales
+from database import get_products, get_sales, insert_products,insert_stock, get_stock, insert_sales, available_stock, sales_per_product, sales_per_day, profit_per_day,profit_per_product
 
 app = Flask(__name__)
 
@@ -7,7 +7,7 @@ app.secret_key = '123wtrdfdcxcf'
 
 @app.route('/')
 def home():
-    flash("home page successful", "success")
+    flash("home page successfully opened", "success")
     return render_template("index.html")
 
 
@@ -31,9 +31,7 @@ def stock():
     return render_template("stock.html", products= products, stock = stock)
 
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
+
 
 
 @app.route('/add_products', methods=['GET', 'POST'])
@@ -62,10 +60,28 @@ def add_sales():
     product_id = request.form['id']
     sales_quantity = request.form['quantity']
     new_sales = (product_id, sales_quantity)
-    insert_sales(new_sales)
-    flash("Sale made successfully!", "success")
+    stock_available = available_stock(product_id)
+    if stock_available < float(sales_quantity):
+        flash("Insufficient stock to comlete sale", "danger")
+    else:
+        insert_sales(new_sales)
+        flash("Sale made successfully!", "success")
     return redirect(url_for('sales'))
 
+@app.route('/dashboard')
+def dashboard():
+    sales_product = sales_per_product()
+    profit_product = profit_per_product()
+    
+    #product related dash data
+    product_names = [i[1] for i in sales_product]
+    sale_prod = [i[1] for i in sales_product]
+    prof_prod = [i[1] for i in profit_product]
+
+
+#date related dash data
+date = [i[0] for i in sales_day]
+sales_of_day = [i[1] for i in asles_day]
 app.run(debug=True)
 
 # debugging from browser and relation with productiion , html escaping, variable rules

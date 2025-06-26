@@ -7,6 +7,8 @@ conn = psycopg2.connect(user="postgres", password="12039",
 cur = conn.cursor()
 
 # getting products
+
+
 def get_products():
     cur.execute("select * from products")
     products = cur.fetchall()
@@ -20,6 +22,8 @@ def get_sales():
     return sales
 
 # getting stock
+
+
 def get_stock():
     cur.execute("select * from stock")
     stock = cur.fetchall()
@@ -31,7 +35,6 @@ def insert_products(values):
     insert_query = "insert into products(name,buying_price,selling_price)values(%s,%s,%s)"
     cur.execute(insert_query, values)
     conn.commit()
-
 
 
 # current_datetime = str(datetime.now())
@@ -51,33 +54,56 @@ def insert_sales(values):
 
 
 # getting sales per products
-def sales_per_products():
-    cur.execute("select p.name AS product_name, SUM(s.quantity) AS total_quantity_sold FROM sales s JOIN products p ON s.pid = p.id GROUP BY p.name ORDER BY total_quantity_sold DESC")
-    s_p_p = cur.fetchall()
-    return s_p_p
+def sales_per_product():
+    cur.execute("""
+        select products.name as p_name , sum(sales.quantity * products.selling_price) from products
+         join sales on products.id = sales.pid group by p_name ;
+    """)
+    sales_product = cur.fetchall()
+    return sales_product
 
 # sales per day
+
+
 def sales_per_day():
-    cur.execute("SELECT DATE(created_at) AS sale_date, SUM(quantity) AS total_quantity_sold FROM sales GROUP BY sale_date ORDER BY sale_date")
-    s_p_d = cur.fetchall() 
-    return s_p_d
+    cur.execute("""
+        select date(sales.created_at) as date , sum(sales.quantity * products.selling_price) from sales join
+        products on products.id = sales.pid group by date order by date;
+    """)
+    sales_day = cur.fetchall()
+    return sales_day
 
 # profit per product
-def profit_per_prouct():
-    cur.execute("SELECT p.name AS product_name, SUM((p.selling_price - p.buying_price) * s.quantity) AS total_profit FROM sales s JOIN products p ON s.pid = p.id GROUP BY p.name ORDER BY total_profit DESC")
-    p_p_p = cur.fetchall() 
-    return p_p_p
+
+
+def profit_per_product():
+    cur.execute("""
+        select products.name as p_name , sum(sales.quantity * (products.selling_price - products.buying_price))
+        as profit from products join sales on products.id = sales.pid group by p_name ;
+    """)
+    profit_product = cur.fetchall()
+    return profit_product
 
 # profit per day
+
+
 def profit_per_day():
-    cur.execute("SELECT DATE(s.created_at) AS sale_date, SUM((p.selling_price - p.buying_price) * s.quantity) AS daily_profit FROM sales s JOIN products p ON s.pid = p.id GROUP BY sale_date ORDER BY sale_date")
-    p_p_d = cur.fetchall() 
-    return p_p_d
+    cur.execute("""
+        select date(sales.created_at) as date , sum(sales.quantity * (products.selling_price - products.buying_price))
+        as profit from  products join sales on products.id = sales.pid group by date order by date;
+    """)
+    profit_day = cur.fetchall()
+    return profit_day
+
 
 def available_stock(pid):
-    cur.execute("select sum(stock.stock_quantity)from stock where pid = %s,(pid,)")
+    cur.execute(
+        "select sum(stock.stock_quantity)from stock where pid = %s", (pid,))
     total_stock = cur.fetchone()[0] or 0
-    cur.execute("select sum(sales.quantity)from sales where pid = %s",(pid,))
+    cur.execute("select sum(sales.quantity)from sales where pid = %s", (pid,))
     total_sold = cur.fetchone()[0] or 0
 
     return total_stock - total_sold
+
+
+sales_product = sales_per_product
