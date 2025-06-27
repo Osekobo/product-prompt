@@ -72,16 +72,27 @@ def add_sales():
 def dashboard():
     sales_product = sales_per_product()
     profit_product = profit_per_product()
+    sales_day = sales_per_day()
+    profit_day = profit_per_day()
     
-    #product related dash data
-    product_names = [i[1] for i in sales_product]
-    sale_prod = [i[1] for i in sales_product]
-    prof_prod = [i[1] for i in profit_product]
+#product related dash data
+    product_names = [i[0] for i in sales_product]
+    sale_prod = [float(i[1]) for i in sales_product]
+    prof_prod = [float(i[1]) for i in profit_product]
 
 
 #date related dash data
-date = [i[0] for i in sales_day]
-sales_of_day = [i[1] for i in asles_day]
+    date = [str(i[0]) for i in sales_day]
+    sales_of_day = [float(i[1]) for i in sales_day]
+    profit_of_day = [float(i[1]) for i in profit_day]
+
+# day dashboard data
+    date = [str(i[0]) for i in profit_day]
+    prof_day = [float(i[1]) for i in profit_day]
+    s_day = [float(i[1]) for i in sales_day]
+
+    return render_template("dashboard.html", product_names = product_names, sale_prod = sale_prod, prof_prod = prof_prod,date =date,sales_of_day = sales_of_day,profit_of_day=profit_of_day,prof_day = prof_day,s_day = s_day)
+
 app.run(debug=True)
 
 # debugging from browser and relation with productiion , html escaping, variable rules
