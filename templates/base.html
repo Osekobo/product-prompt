@@ -76,6 +76,9 @@
                   >Home</a
                 >
               </li>
+
+              {% if session.email %}
+              
               <li class="nav-item">
                 <a class="nav-link text-white p-3" href="/products">Products</a>
               </li>
@@ -91,6 +94,14 @@
                 >
               </li>
               <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/logout"
+                  >Logout</a
+                >
+              </li>
+
+              {% else %}
+              
+              <li class="nav-item">
                 <form class="d-flex" role="search" style="padding: 16px 32px">
                   <input
                     class="form-control me-2"
@@ -103,6 +114,18 @@
                   </button>
                 </form>
               </li>
+
+              <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/register"
+                  >Register</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white p-3" href="/login"
+                  >Login</a
+                >
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
