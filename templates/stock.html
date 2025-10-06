@@ -1,8 +1,6 @@
 {% extends "base.html" %} {% block title%} stock {% endblock %} {% block
 content%}
-
 <h1 class="text-center mt-5">Stock page</h1>
-
 <!-- start -->
 <div class="container">
   <!-- Button trigger modal -->
@@ -36,7 +34,7 @@ content%}
         </div>
         <div class="modal-body">
           <!-- form start -->
-           
+
           <form action="/add_stock" method="post">
             <label for="">select product</label><br />
             <select name="pid">
